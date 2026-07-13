@@ -1,0 +1,387 @@
+================================================================================
+TATA CARA PENGGUNAAN GIT
+================================================================================
+File ini berisi perintah-perintah Git yang paling sering dipakai sehari-hari,
+disertai kegunaan dan contoh penggunaannya. Versi ringkas, bukan dokumentasi
+lengkap. Untuk hal yang jarang, baca: https://git-scm.com/doc
+
+
+================================================================================
+BAGIAN 1: SETUP AWAL (SEKALI SAJA PER MESIN)
+================================================================================
+
+1.1. Konfigurasi identitas (wajib, tanpa ini commit gagal)
+----------------------------------------------------------
+Kegunaan : Menentukan nama & email yang tercatat di setiap commit.
+Perintah  :
+    git config --global user.name  "Nama Kamu"
+    git config --global user.email "email@kamu.com"
+
+Catatan : --global = untuk semua repo di mesin ini.
+          Tanpa --global = hanya untuk repo saat ini.
+
+Cek hasil :
+    git config --list
+    git config user.name
+    git config user.email
+
+
+1.2. Inisialisasi repo baru
+---------------------------
+Kegunaan : Mengubah folder biasa menjadi repository Git (membuat folder .git).
+Perintah  :
+    cd D:\anime-template
+    git init
+
+Output   : "Initialized empty Git repository in .../.git/"
+
+Cek      : git status
+           -> Akan muncul "On branch master/main" (bukan "not a git repository").
+
+
+1.3. Mengatur branch default ke "main"
+---------------------------------------
+Kegunaan : Nama branch default Git yang baru adalah "main" (bukan "master").
+Perintah  :
+    git branch -M main
+
+
+1.4. Menghubungkan ke remote (GitHub/GitLab/dll.)
+-------------------------------------------------
+Kegunaan : Menyimpan backup & kolaborasi via remote repository.
+Syarat   : Buat repo kosong dulu di GitHub (jangan centang README).
+Perintah  :
+    git remote add origin https://github.com/username/nama-repo.git
+    git push -u origin main           # -u = set upstream, hanya perlu sekali
+
+Cek remote :
+    git remote -v
+
+
+================================================================================
+BAGIAN 2: ALUR KERJA HARIAN (ADD -> COMMIT -> PUSH)
+================================================================================
+
+2.1. Cek kondisi repo
+----------------------
+Kegunaan : Melihat file apa yang berubah, di-stage, atau belum di-track.
+Perintah  :
+    git status
+
+Output penting :
+    "Untracked"     = file baru, belum di-track Git
+    "Modified"      = file berubah, belum di-stage
+    "Staged"        = file sudah di-add, siap di-commit
+    "nothing to commit, working tree clean" = tidak ada perubahan
+
+
+2.2. Lihat perubahan detail
+---------------------------
+Kegunaan : Membandingkan file di working directory dengan versi terakhir.
+Perintah  :
+    git diff                        # perubahan yang belum di-stage
+    git diff --staged               # perubahan yang sudah di-stage
+    git diff namafile.txt           # perubahan 1 file spesifik
+
+
+2.3. Menambahkan file ke staging area
+-------------------------------------
+Kegunaan : Mempersiapkan file untuk di-commit.
+Perintah  :
+    git add namafile.txt            # 1 file
+    git add folder/                 # 1 folder
+    git add .                       # semua perubahan di folder ini
+    git add -A                      # semua perubahan di SELURUH repo
+
+Tips    : "git add ." paling sering dipakai untuk commit harian.
+
+
+2.4. Commit (simpan snapshot)
+-----------------------------
+Kegunaan : Merekam snapshot perubahan ke history Git.
+Perintah  :
+    git commit -m "Pesan commit di sini"
+
+Aturan pesan commit yang baik :
+    - Gunakan bahasa Inggris (standar industri), misal:
+        "Add login page"
+        "Fix bug on dashboard chart"
+        "Update README with installation steps"
+    - Atau bahasa Indonesia konsisten, misal:
+        "Tambah halaman login"
+        "Perbaiki bug chart dashboard"
+    - Singkat, jelas, imperatif (kata perintah).
+    - Jangan commit dengan pesan kosong/kayak "asd".
+
+Commit cepat (skip add manual, hanya untuk file yang sudah di-track) :
+    git commit -am "Pesan"
+
+
+2.5. Push ke remote
+-------------------
+Kegunaan : Mengirim commit lokal ke remote (GitHub/GitLab).
+Perintah  :
+    git push                        # push ke branch yang sama dengan lokal
+    git push origin main            # push ke branch main di remote origin
+    git push -u origin main         # set upstream (cuma perlu sekali per branch)
+
+Kalau baru pertama kali push :
+    git push -u origin main
+
+
+2.6. Pull dari remote
+---------------------
+Kegunaan : Mengambil update terbaru dari remote ke lokal.
+Perintah  :
+    git pull                        # pull branch yang aktif
+    git pull origin main            # pull branch main secara eksplisit
+
+Wajib dijalankan sebelum mulai kerja, supaya tidak konflik.
+
+
+================================================================================
+BAGIAN 3: BRANCHING (FITUR UTAMA GIT)
+================================================================================
+
+3.1. Konsep branch
+------------------
+Branch = salinan kode yang bisa dikerjakan paralel tanpa mengganggu branch lain.
+Default branch biasanya "main" (kode production/stabil).
+Untuk fitur baru, buat branch terpisah, kerjakan, lalu merge balik ke main.
+
+
+3.2. Lihat & pindah branch
+--------------------------
+    git branch                      # list branch lokal
+    git branch -a                   # list semua (lokal + remote)
+    git branch -v                   # list + commit terakhir
+
+    git checkout nama-branch        # pindah ke branch
+    git switch nama-branch          # alternatif baru (disarankan)
+    git checkout -b fitur-login     # buat branch baru & langsung pindah ke sana
+    git switch -c fitur-login       # alternatif baru
+
+
+3.3. Hapus branch
+-----------------
+    git branch -d nama-branch       # hapus branch yang sudah di-merge
+    git branch -D nama-branch       # paksa hapus (hati-hati)
+
+
+3.4. Merge branch
+-----------------
+Kegunaan : Menggabungkan perubahan dari branch lain ke branch aktif.
+Skenario : Selesai kerjakan fitur di "fitur-login", mau gabung ke "main".
+
+    git checkout main
+    git pull                        # pastikan main up-to-date
+    git merge fitur-login           # gabungkan fitur-login ke main
+    git branch -d fitur-login       # hapus branch fitur (opsional)
+
+
+3.5. Push branch baru ke remote
+-------------------------------
+    git push -u origin fitur-login
+
+Setelah itu, di GitHub biasanya muncul tombol "Compare & pull request" untuk
+merge via Pull Request (alur kolaborasi tim).
+
+
+================================================================================
+BAGIAN 4: LIAT HISTORY & MENCARI KESALAHAN
+================================================================================
+
+4.1. Lihat log commit
+---------------------
+    git log                         # lengkap (hash, author, tanggal, pesan)
+    git log --oneline               # ringkas (1 baris per commit)
+    git log --oneline -10           # 10 commit terakhir
+    git log --graph --oneline       # visual branch/merge
+    git log --author="Nama"         # filter by author
+    git log -- namafile.txt         # history 1 file
+
+
+4.2. Lihat isi commit tertentu
+------------------------------
+    git show <hash>                 # lihat perubahan di commit itu
+    git show <hash> -- namafile.txt # lihat perubahan 1 file di commit itu
+
+Hash commit = kode acuk 7-40 karakter, contoh: a1b2c3d
+
+
+4.3. Membandingkan 2 branch/commit
+---------------------------------
+    git diff branch1..branch2
+    git diff main..fitur-login
+
+
+================================================================================
+BAGIAN 5: BATALKAN / UNDO (HATI-HATI!)
+================================================================================
+
+5.1. Modify file yang belum di-stage
+------------------------------------
+    git checkout -- namafile.txt    # buang perubahan, balik ke versi terakhir
+    git restore namafile.txt        # alternatif baru (disarankan)
+
+
+5.2. Unstage file (sudah di-add, belum di-commit)
+-------------------------------------------------
+    git restore --staged namafile.txt   # unstage, file tidak hilang
+    git reset HEAD namafile.txt         # cara lama
+
+
+5.3. Undo commit terakhir (tidak push)
+--------------------------------------
+    git reset --soft HEAD~1         # undo commit, perubahan balik ke staged
+    git reset --mixed HEAD~1        # undo commit, perubahan balik ke working dir
+    git reset --hard HEAD~1         # HAPUS commit + perubahannya (BAHAYA!)
+
+HEAD~1 = commit sebelumnya, HEAD~2 = 2 commit sebelumnya.
+
+
+5.4. Sudah terlanjur push?
+--------------------------
+    git revert <hash>               # buat commit baru yang membatalkan hash itu
+                                    # AMAN untuk yang sudah di-push.
+
+
+================================================================================
+BAGIAN 6: STASH (SIMPAN SEMENTARA)
+================================================================================
+
+Kegunaan : Kerjaan belum jadi tapi mau pindah branch duluan? Stash dulu.
+Perintah  :
+    git stash                       # simpan perubahan & kembali ke clean
+    git stash save "pesan"          # stash dengan catatan
+    git stash list                  # lihat daftar stash
+    git stash pop                   # ambil stash terakhir, lalu hapus dari list
+    git stash apply stash@{0}       # ambil stash tertentu, tidak dihapus
+    git stash drop stash@{0}        # hapus stash tertentu
+
+
+================================================================================
+BAGIAN 7: .gitignore (FILE YANG TIDAK MAU DI-TRACK)
+================================================================================
+
+Kegunaan : Menyebutkan file/folder yang diabaikan Git (jangan sampai ter-commit).
+File      : .gitignore (taruh di root repo)
+
+Contoh isi :
+    # OS
+    .DS_Store
+    Thumbs.db
+
+    # Editor
+    .vscode/
+    .idea/
+
+    # Node
+    node_modules/
+    npm-debug.log
+
+    # Python
+    __pycache__/
+    *.pyc
+    .venv/
+
+    # Env / credential (JANGAN PERNAH COMMIT FILE INI!)
+    .env
+    *.pem
+    config.local.js
+
+Setelah edit .gitignore :
+    git add .gitignore
+    git commit -m "Add .gitignore"
+
+
+================================================================================
+BAGIAN 8: ALUR KERJA TIM (PULL REQUEST WORKFLOW)
+================================================================================
+
+1. Pull main terbaru :
+       git checkout main
+       git pull
+
+2. Buat branch fitur :
+       git checkout -b fitur/nama-fitur
+
+3. Kerja, lalu add + commit :
+       git add .
+       git commit -m "Add fitur X"
+
+4. Push branch ke remote :
+       git push -u origin fitur/nama-fitur
+
+5. Buka GitHub -> "Compare & pull request" -> Review -> Merge
+
+6. Balik ke main, hapus branch lokal :
+       git checkout main
+       git pull
+       git branch -d fitur/nama-fitur
+
+
+================================================================================
+BAGIAN 9: PERINTAH DARURAT / TROUBLESHOOTING
+================================================================================
+
+9.1. Lupa sudah di branch mana
+------------------------------
+    git branch --show-current
+
+
+9.2. Conflict saat merge / pull
+-------------------------------
+Tanda : "CONFLICT (content): Merge conflict in namafile.txt"
+File yang konflik akan punya marker :
+    <<<<<<< HEAD
+    kode dari branch kamu
+    =======
+    kode dari branch lain
+    >>>>>>> nama-branch
+
+Cara fix :
+    1. Buka file, edit manual, hapus marker <<<<<<<, =======, >>>>>>>
+    2. git add namafile.txt
+    3. git commit -m "Resolve merge conflict"
+
+
+9.3. Tidak sengaja commit ke branch yang salah
+----------------------------------------------
+    git branch nama-branch-baru     # simpan commit ke branch baru
+    git reset --hard HEAD~1         # hapus dari branch salah (HATI-HATI)
+
+
+9.4. Ingin lihat semua reflog (riwayat pergerakan HEAD)
+-------------------------------------------------------
+    git reflog
+Berguna saat "kehilangan" commit karena reset.
+
+
+9.5. Ingin tahu siapa yang edit baris ini
+-----------------------------------------
+    git blame namafile.txt
+
+
+================================================================================
+BAGIAN 10: TIPS CEPAT
+================================================================================
+
+- Selalu baca output "git status" sebelum commit.
+- Commit sering, commit kecil (lebih mudah di-review & di-revert).
+- Pesan commit deskriptif, jangan cuma "update" / "fix".
+- Jangan commit file rahasia (.env, credential, API key).
+- Sebelum push, pastikan sudah pull main terbaru.
+- Untuk project baru, langsung bikin .gitignore dari awal.
+- Belajar pakai "git log --graph --oneline --all" untuk lihat struktur branch.
+
+
+================================================================================
+REFERENSI
+================================================================================
+- Dokumentasi resmi  : https://git-scm.com/doc
+- Visual cheat sheet : https://ndpsoftware.com/git-cheatsheet.html
+- Belajar interaktif : https://learngitbranching.js.org/?locale=id_ID
+- Buku gratis         : https://git-scm.com/book/id/v2 (Pro Git, bahasa Indonesia)
+
+================================================================================
