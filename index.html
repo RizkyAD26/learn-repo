@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="id" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AniStream — Watch Anime Online</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="bg-body-secondary border-bottom small text-secondary py-2 text-center">
+    Welcome to AniStream — #1 site to watch anime online
+  </div>
+
+  <!-- Header -->
+  <header class="border-bottom sticky-top bg-body">
+    <div class="container py-3">
+      <div class="d-flex align-items-center gap-3 flex-wrap">
+        <a class="navbar-brand fw-bold d-inline-flex align-items-center gap-2 m-0" href="#">
+          <span class="text-danger">▶</span>
+          <span class="text-gradient">AniStream</span>
+        </a>
+
+        <form class="flex-grow-1" role="search" style="max-width:520px" onsubmit="return false">
+          <div class="input-group">
+            <input class="form-control rounded-start-pill" type="search" placeholder="Search anime..." aria-label="Search" />
+            <button class="btn btn-outline-secondary rounded-end-pill px-3" type="submit" aria-label="Search">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
+
+        <div class="d-flex gap-2 align-items-center">
+          <button class="btn btn-outline-secondary btn-sm" id="themeBtn" aria-label="Toggle theme">
+            <i class="bi bi-moon-stars"></i>
+          </button>
+          <a class="btn btn-danger btn-sm rounded-pill px-3" href="#">Login</a>
+        </div>
+      </div>
+
+      <nav class="nav mt-3 overflow-auto">
+        <a class="nav-link text-secondary px-2" href="#">Home</a>
+        <a class="nav-link text-secondary px-2" href="#">Movies</a>
+        <a class="nav-link text-secondary px-2" href="#">TV Series</a>
+        <a class="nav-link text-secondary px-2" href="#">Most Popular</a>
+        <a class="nav-link text-secondary px-2" href="#">Top Airing</a>
+        <a class="nav-link text-secondary px-2" href="#">Genres ▾</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero / spotlight -->
+  <section class="position-relative overflow-hidden hero">
+    <div class="hero__bg" style="background-image:url('https://picsum.photos/seed/hero1/1600/600')"></div>
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-7">
+          <span class="badge bg-danger mb-2">TOP 5</span>
+          <h1 class="display-5 fw-bold mt-2">Shadow of the Eternal Blade</h1>
+          <p class="text-secondary mb-2">TV · 24 Episodes · Ongoing</p>
+          <p class="text-light opacity-75">A wandering swordsman uncovers a forgotten pact. Each duel carves another memory from the past — and another enemy at his gate.</p>
+          <div class="d-flex gap-2 mt-3">
+            <a class="btn btn-danger rounded-pill px-4" href="#">▶ Watch Now</a>
+            <a class="btn btn-outline-light rounded-pill px-4" href="#">+ Add to List</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container py-4">
+
+    <!-- Filter strip -->
+    <section class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+      <div class="btn-group flex-wrap" role="group">
+        <button class="btn btn-sm btn-outline-secondary filter__tab active" data-filter="all">All</button>
+        <button class="btn btn-sm btn-outline-secondary filter__tab" data-filter="airing">Airing</button>
+        <button class="btn btn-sm btn-outline-secondary filter__tab" data-filter="completed">Completed</button>
+        <button class="btn btn-sm btn-outline-secondary filter__tab" data-filter="movies">Movies</button>
+        <button class="btn btn-sm btn-outline-secondary filter__tab" data-filter="ova">OVA</button>
+      </div>
+      <div class="d-flex align-items-center gap-2 small text-secondary">
+        <label class="form-label m-0">Sort</label>
+        <select class="form-select form-select-sm" style="width:auto">
+          <option>Default</option>
+          <option>Recently Updated</option>
+          <option>Most Popular</option>
+          <option>Score</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Most Popular grid -->
+    <section class="mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h4 m-0">Most Popular</h2>
+        <a href="#" class="link-info small text-decoration-none">View all →</a>
+      </div>
+      <div class="row g-3" id="popularGrid">
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2"><div class="card anime-card" data-status="airing">
+          <div class="anime-card__media" style="background-image:url('https://picsum.photos/seed/a1/400/560')">
+            <span class="anime-card__rating">9.1</span>
+            <span class="anime-card__ep">EP 12/12</span>
+          </div>
+          <div class="card-body p-2">
+            <h3 class="h6 m-0 text-truncate">Crimson Pact</h3>
+            <small class="text-secondary">TV · Action, Fantasy</small>
+          </div>
+        </div></div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2"><div class="card anime-card" data-status="completed">
+          <div class="anime-card__media" style="background-image:url('https://picsum.photos/seed/a2/400/560')">
+            <span class="anime-card__rating">8.7</span>
+            <span class="anime-card__ep">EP 24/24</span>
+          </div>
+          <div class="card-body p-2">
+            <h3 class="h6 m-0 text-truncate">Astra Reverie</h3>
+            <small class="text-secondary">TV · Sci-Fi, Mecha</small>
+          </div>
+        </div></div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2"><div class="card anime-card" data-status="airing">
+          <div class="anime-card__media" style="background-image:url('https://picsum.photos/seed/a3/400/560')">
+            <span class="anime-card__rating">8.4</span>
+            <span class="anime-card__ep">EP 8</span>
+          </div>
+          <div class="card-body p-2">
+            <h3 class="h6 m-0 text-truncate">Cafe of Lost Hours</h3>
+            <small class="text-secondary">TV · Slice of Life</small>
+          </div>
+        </div></div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2"><div class="card anime-card" data-status="airing">
+          <div class="anime-card__media" style="background-image:url('https://picsum.photos/seed/a4/400/560')">
+            <span class="anime-card__rating">8.2</span>
+            <span class="anime-card__ep">EP 11</span>
+          </div>
+          <div class="card-body p-2">
+            <h3 class="h6 m-0 text-truncate">Iron Bloom</h3>
+            <small class="text-secondary">TV · Mecha, Drama</small>
+          </div>
+        </div></div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2"><div class="card anime-card" data-status="airing">
+          <div class="anime-card__media" style="background-image:url('https://picsum.photos/seed/a5/400/560')">
+            <span class="anime-card__rating">8.0</span>
+            <span class="anime-card__ep">EP 22/24</span>
+          </div>
+          <div class="card-body p-2">
+            <h3 class="h6 m-0 text-truncate">Hexbound High</h3>
+            <small class="text-secondary">TV · Magic, School</small>
+          </div>
+        </div></div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2"><div class="card anime-card" data-status="movies">
+          <div class="anime-card__media" style="background-image:url('https://picsum.photos/seed/a6/400/560')">
+            <span class="anime-card__rating">7.9</span>
+            <span class="anime-card__ep">EP 1/1</span>
+          </div>
+          <div class="card-body p-2">
+            <h3 class="h6 m-0 text-truncate">Midnight Lantern</h3>
+            <small class="text-secondary">Movie · Fantasy</small>
+          </div>
+        </div></div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2"><div class="card anime-card" data-status="airing">
+          <div class="anime-card__media" style="background-image:url('https://picsum.photos/seed/a7/400/560')">
+            <span class="anime-card__rating">7.8</span>
+            <span class="anime-card__ep">EP 9/12</span>
+          </div>
+          <div class="card-body p-2">
+            <h3 class="h6 m-0 text-truncate">Stoneborn</h3>
+            <small class="text-secondary">TV · Adventure</small>
+          </div>
+        </div></div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2"><div class="card anime-card" data-status="airing">
+          <div class="anime-card__media" style="background-image:url('https://picsum.photos/seed/a8/400/560')">
+            <span class="anime-card__rating">7.6</span>
+            <span class="anime-card__ep">EP 5</span>
+          </div>
+          <div class="card-body p-2">
+            <h3 class="h6 m-0 text-truncate">Paper Sky</h3>
+            <small class="text-secondary">TV · Drama</small>
+          </div>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- Two-column: Top Airing + Schedule -->
+    <section class="row g-4 mb-4">
+      <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h4 m-0">Top Airing</h2>
+          <a href="#" class="link-info small text-decoration-none">View all →</a>
+        </div>
+        <ul class="list-unstyled m-0">
+          <li class="list-row">
+            <span class="list-row__rank text-danger">01</span>
+            <a class="list-row__thumb rounded" href="#" style="background-image:url('https://picsum.photos/seed/t1/200/280')"></a>
+            <div>
+              <a class="fw-semibold text-decoration-none" href="#">Crimson Pact</a>
+              <div class="small text-secondary">TV · EP 12 · 9.1</div>
+            </div>
+          </li>
+          <li class="list-row">
+            <span class="list-row__rank text-danger">02</span>
+            <a class="list-row__thumb rounded" href="#" style="background-image:url('https://picsum.photos/seed/t2/200/280')"></a>
+            <div>
+              <a class="fw-semibold text-decoration-none" href="#">Astra Reverie</a>
+              <div class="small text-secondary">TV · EP 24 · 8.7</div>
+            </div>
+          </li>
+          <li class="list-row">
+            <span class="list-row__rank text-danger">03</span>
+            <a class="list-row__thumb rounded" href="#" style="background-image:url('https://picsum.photos/seed/t3/200/280')"></a>
+            <div>
+              <a class="fw-semibold text-decoration-none" href="#">Iron Bloom</a>
+              <div class="small text-secondary">TV · EP 11 · 8.2</div>
+            </div>
+          </li>
+          <li class="list-row">
+            <span class="list-row__rank text-danger">04</span>
+            <a class="list-row__thumb rounded" href="#" style="background-image:url('https://picsum.photos/seed/t4/200/280')"></a>
+            <div>
+              <a class="fw-semibold text-decoration-none" href="#">Hexbound High</a>
+              <div class="small text-secondary">TV · EP 22 · 8.0</div>
+            </div>
+          </li>
+          <li class="list-row">
+            <span class="list-row__rank text-danger">05</span>
+            <a class="list-row__thumb rounded" href="#" style="background-image:url('https://picsum.photos/seed/t5/200/280')"></a>
+            <div>
+              <a class="fw-semibold text-decoration-none" href="#">Stoneborn</a>
+              <div class="small text-secondary">TV · EP 9 · 7.8</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h4 m-0">Estimated Schedule</h2>
+          <a href="#" class="link-info small text-decoration-none">Full schedule →</a>
+        </div>
+        <ul class="list-unstyled m-0">
+          <li class="d-grid sched-row"><span class="text-danger fw-bold">MON</span><a href="#" class="text-decoration-none">Crimson Pact</a><span class="text-secondary small">17:30</span></li>
+          <li class="d-grid sched-row"><span class="text-danger fw-bold">TUE</span><a href="#" class="text-decoration-none">Cafe of Lost Hours</a><span class="text-secondary small">22:00</span></li>
+          <li class="d-grid sched-row"><span class="text-danger fw-bold">WED</span><a href="#" class="text-decoration-none">Stoneborn</a><span class="text-secondary small">19:00</span></li>
+          <li class="d-grid sched-row"><span class="text-danger fw-bold">THU</span><a href="#" class="text-decoration-none">Hexbound High</a><span class="text-secondary small">21:30</span></li>
+          <li class="d-grid sched-row"><span class="text-danger fw-bold">FRI</span><a href="#" class="text-decoration-none">Astra Reverie</a><span class="text-secondary small">23:00</span></li>
+          <li class="d-grid sched-row"><span class="text-danger fw-bold">SAT</span><a href="#" class="text-decoration-none">Paper Sky</a><span class="text-secondary small">20:00</span></li>
+          <li class="d-grid sched-row"><span class="text-danger fw-bold">SUN</span><a href="#" class="text-decoration-none">Iron Bloom</a><span class="text-secondary small">18:00</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Genres -->
+    <section class="mb-4">
+      <h2 class="h4 mb-3">Browse by Genre</h2>
+      <div class="d-flex flex-wrap gap-2">
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Action</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Adventure</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Comedy</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Drama</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Fantasy</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Horror</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Mecha</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Mystery</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Romance</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Sci-Fi</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Slice of Life</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Sports</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Supernatural</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Thriller</a>
+        <a href="#" class="badge text-bg-secondary text-decoration-none p-2">Isekai</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-body-secondary border-top mt-5">
+    <div class="container py-4">
+      <div class="row g-4">
+        <div class="col-md-5">
+          <a class="navbar-brand fw-bold d-inline-flex align-items-center gap-2" href="#">
+            <span class="text-danger">▶</span><span class="text-gradient">AniStream</span>
+          </a>
+          <p class="text-secondary small mt-2 m-0">AniStream does not host any files on its server. All content is provided by non-affiliated third parties.</p>
+        </div>
+        <div class="col-md-3">
+          <h4 class="h6">Explore</h4>
+          <a class="d-block small text-secondary text-decoration-none py-1" href="#">Home</a>
+          <a class="d-block small text-secondary text-decoration-none py-1" href="#">Movies</a>
+          <a class="d-block small text-secondary text-decoration-none py-1" href="#">TV Series</a>
+          <a class="d-block small text-secondary text-decoration-none py-1" href="#">Most Popular</a>
+        </div>
+        <div class="col-md-3">
+          <h4 class="h6">Help</h4>
+          <a class="d-block small text-secondary text-decoration-none py-1" href="#">Contact</a>
+          <a class="d-block small text-secondary text-decoration-none py-1" href="#">FAQ</a>
+          <a class="d-block small text-secondary text-decoration-none py-1" href="#">Terms</a>
+          <a class="d-block small text-secondary text-decoration-none py-1" href="#">DMCA</a>
+        </div>
+      </div>
+      <hr class="my-3" />
+      <p class="text-secondary small m-0">© 2026 AniStream — template</p>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
